@@ -4,7 +4,7 @@ channel_id=$(awk '/shardeum_channel_id:/ {print $NF}' config);
 tg_bot_token=$(awk '/tg_bot_token:/ {print $NF}' config);
 node_name=$(awk '/node_name:/ {print $NF}' config);
 
-docker exec -it shardeum-dashboard operator-cli status > status.txt
+docker exec -t shardeum-dashboard operator-cli status > status.txt
 status=$(awk '/state:/ {print $NF}' status.txt | sed 's/.$//');
 staked=$(awk '/lockedStake:/ {print $NF}' status.txt);
 earn=$(awk '/currentRewards:/ {print $NF}' status.txt);

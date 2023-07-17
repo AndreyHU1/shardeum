@@ -9,7 +9,7 @@ if [[ $version == *".5.1"* ]]; then
  	sudo curl -O https://raw.githubusercontent.com/AndreyHU1/shardeum/main/update.exp && chmod +x update.exp
 	sudo expect update.exp
 	docker exec -t shardeum-dashboard operator-cli start
-	sleep 20
+	sleep 5
 	docker exec -t shardeum-dashboard operator-cli status > status.txt
 	version=$(awk '/shardeumVersion:/ {print $NF}' status.txt)
 	curl -F chat_id="$channel_id" -F text="⭐️⭐️⭐️ $node_name: updated to version 🌵 $version 🌵 ⭐️⭐️⭐️" https://api.telegram.org/bot"$tg_bot_token"/sendMessage

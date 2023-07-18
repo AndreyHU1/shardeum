@@ -9,6 +9,6 @@ sudo curl -O https://raw.githubusercontent.com/AndreyHU1/shardeum/main/update.sh
 sudo expect auto.exp $1
 sudo docker exec shardeum-dashboard operator-cli start
 sleep 5
-sudo ./status.sh
+sudo bash status.sh #sudo ./status.sh
 (crontab -l; echo "0 12 * * * bash update.sh >> /root/cron.log") | crontab -
 (crontab -l; echo "45 11 * * * curl -O https://raw.githubusercontent.com/AndreyHU1/shardeum/main/update.sh >> /root/cron.log") | crontab -

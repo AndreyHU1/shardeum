@@ -1,5 +1,4 @@
 #!/root/bin/bash
-#set timeout -1
 channel_id=$(awk '/shardeum_channel_id:/ {print $NF}' config);
 tg_bot_token=$(awk '/tg_bot_token:/ {print $NF}' config);
 node_name=$(awk '/node_name:/ {print $NF}' config);
@@ -20,8 +19,36 @@ echo "Staked: $staked";
 echo "Earn: $earn";
 echo "Version: $version";
 
-if [[ $status == *"tandb"* ]]; then 
-	curl -F chat_id="$channel_id" -F text="✅ $node_name: $status | Staked: $staked | Earn: $earn | Ver: $version" https://api.telegram.org/bot"$tg_bot_token"/sendMessage
-else
-	curl -F chat_id="$channel_id" -F text="❌ $node_name: $status | Staked: $staked | Earn: $earn | Ver: $version" https://api.telegram.org/bot"$tg_bot_token"/sendMessage
-fi
+for (( i=0; i<5; i++)); do
+	if [[ $status == *"tandb"* ]]; then 
+		curl -F chat_id="$channel_id" -F text="✅ $node_name: $status | Staked: $staked | Earn: $earn | Ver: $version" https://api.telegram.org/bot"$tg_bot_token"/sendMessage;
+		if [[ $staked == "'0.0"* ]]; then # тут нужно проверять, как будет работать неэкранированная кавычка
+			sleep 10;
+			echo "zero staking"
+			docker exec -it shardeum-dashboard operator-cli status > /root/status.txt;
+			staked=$(awk '/lockedStake:/ {print $NF}' status.txt);
+		else
+			i=10;
+		fi
+	else
+		if [[ $status == *"ctiv"* ]]; then
+			curl -F chat_id="$channel_id" -F text="⭐️ $node_name: $status | Staked: $staked | Earn: $earn | Ver: $version" https://api.telegram.org/bot"$tg_bot_token"/sendMessage;
+			sleep 60;
+			i=0;
+			docker exec -it shardeum-dashboard operator-cli status > /root/status.txt;
+			status=$(awk '/state:/ {print $NF}' status.txt);
+		else	
+			if [[ $status == *"toppe"* ]]; then 
+				curl -F chat_id="$channel_id" -F text="⛔️ $node_name: $status | Staked: $staked | Earn: $earn | Ver: $version" https://api.telegram.org/bot"$tg_bot_token"/sendMessage;
+				docker exec -it shardeum-dashboard operator-cli start;
+				sleep 10;
+				docker exec -it shardeum-dashboard operator-cli status > /root/status.txt
+				status=$(awk '/state:/ {print $NF}' status.txt);
+				version=$(awk '/shardeumVersion:/ {print $NF}' status.txt);
+			else
+				curl -F chat_id="$channel_id" -F text="❌ $node_name: $status | Staked: $staked | Earn: $earn | Ver: $version" https://api.telegram.org/bot"$tg_bot_token"/sendMessage;
+				i=10;
+			fi
+		fi
+	fi
+done

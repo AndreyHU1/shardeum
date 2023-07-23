@@ -21,7 +21,7 @@ echo "Version: $version";
 
 for (( i=0; i<5; i++)); do
 	echo "$i"
-	if ((i>0)); then 
+	if ((i>0)); then
 		echo "sleep 10sec";
 		sleep 30;
 		docker exec -t shardeum-dashboard operator-cli status > status.txt
@@ -35,7 +35,11 @@ for (( i=0; i<5; i++)); do
 		if [[ $staked == "'0.0"* ]]; then # тут нужно проверять, как будет работать неэкранированная кавычка
 			echo "zero staking"
 		else
-			i=10;
+			if [[ $staked == "'"* ]]; then 
+				i=10;
+			else
+				echo "ne slovil...";
+			fi
 		fi
 	else
 		if [[ $status == *"ctiv"* ]]; then

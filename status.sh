@@ -22,7 +22,7 @@ echo "Version: $version";
 for (( i=0; i<5; i++)); do
 	echo "$i"
 	if ((i>0)); then
-		echo "sleep 10sec";
+		echo "sleep 30sec";
 		sleep 30;
 		docker exec -t shardeum-dashboard operator-cli status > status.txt
 		status=$(awk '/state:/ {print $NF}' status.txt | sed 's/.$//');

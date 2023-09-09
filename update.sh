@@ -5,7 +5,7 @@ node_name=$(awk '/node_name:/ {print $NF}' config);
 docker exec -t shardeum-dashboard operator-cli status > status.txt
 version=$(awk '/shardeumVersion:/ {print $NF}' status.txt)
 sudo curl -O https://raw.githubusercontent.com/AndreyHU1/shardeum/main/status.sh
-if [[ $version != *".5.2.2"* ]]; then
+if [[ $version != *".5.6"* ]]; then
 	sudo curl -O https://gitlab.com/shardeum/validator/dashboard/-/raw/main/installer.sh
  	sudo curl -O https://raw.githubusercontent.com/AndreyHU1/shardeum/main/update.exp && chmod +x update.exp
 	sudo expect update.exp

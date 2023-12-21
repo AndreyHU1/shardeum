@@ -30,7 +30,7 @@ for (( i=0; i<5; i++)); do
 		earn=$(awk '/currentRewards:/ {print $NF}' status.txt);
 	fi
 	
-	if [[ $status == *"aiting-for-networ"* ]]; then 
+	if [[ $status == *"aiting-for-networ"* || $status == *"tandb"* ]]; then 
 		curl -F chat_id="$channel_id" -F text="✅ $node_name: $status | Staked: $staked | Earn: $earn | Ver: $version" https://api.telegram.org/bot"$tg_bot_token"/sendMessage;
 		if [[ $staked == "'0.0"* ]]; then # тут нужно проверять, как будет работать неэкранированная кавычка
 			echo "zero staking"

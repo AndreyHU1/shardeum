@@ -3,10 +3,11 @@ set timeout -1
 set password [lindex $argv 0];
 set script_path "./installer.sh"
 
-Do you really want to upgrade now (y/N)?
 spawn $script_path
 expect "By running this installer, you agree to allow the Shardeum team to collect this data. (Y/n)?:"
 send "y\r"
+expect "What base directory should the node use (default ~/.shardeum):"
+send "\r"
 expect "Do you really want to upgrade now (y/N)?"
 send "y\r"
 expect "Do you want to run the web based Dashboard? (Y/n):"

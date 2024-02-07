@@ -7,7 +7,7 @@ version=$(awk '/shardeumVersion:/ {print $NF}' status.txt)
 sudo curl -O https://raw.githubusercontent.com/AndreyHU1/shardeum/main/status.sh
 
 # if [[ 1 == 1 ]]; then
-if [[ $version != *".9.5"* && $version == *".9."* ]]; then
+if [[ $version != *".9.6"* && $version == *".9."* ]]; then
 	sudo curl -O https://gitlab.com/shardeum/validator/dashboard/-/raw/main/installer.sh
  	sudo curl -O https://raw.githubusercontent.com/AndreyHU1/shardeum/main/update.exp && chmod +x update.exp
 	sudo expect update.exp

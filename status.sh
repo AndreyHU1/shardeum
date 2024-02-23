@@ -1,14 +1,14 @@
 #!/root/bin/bash
-channel_id=$(awk '/shardeum_channel_id:/ {print $NF}' config);
-tg_bot_token=$(awk '/tg_bot_token:/ {print $NF}' config);
-node_name=$(awk '/node_name:/ {print $NF}' config);
+channel_id=$(awk '/shardeum_channel_id:/ {print $NF}' /root/config);
+tg_bot_token=$(awk '/tg_bot_token:/ {print $NF}' /root/config);
+node_name=$(awk '/node_name:/ {print $NF}' /root/config);
 time_now=$(date)
 
-docker exec -t shardeum-dashboard operator-cli status > status.txt
-status=$(awk '/state:/ {print $NF}' status.txt | sed 's/.$//');
-staked=$(awk '/lockedStake:/ {print $NF}' status.txt);
-earn=$(awk '/currentRewards:/ {print $NF}' status.txt);
-version=$(awk '/shardeumVersion:/ {print $NF}' status.txt);
+docker exec -t shardeum-dashboard operator-cli status > /root/status.txt
+status=$(awk '/state:/ {print $NF}' /root/status.txt | sed 's/.$//');
+staked=$(awk '/lockedStake:/ {print $NF}' /root/status.txt);
+earn=$(awk '/currentRewards:/ {print $NF}' /root/status.txt);
+version=$(awk '/shardeumVersion:/ {print $NF}' /root/status.txt);
 
 echo ""
 echo ""
@@ -24,10 +24,10 @@ for (( i=0; i<5; i++)); do
 	if ((i>0)); then
 		echo "sleep 30sec";
 		sleep 30;
-		docker exec -t shardeum-dashboard operator-cli status > status.txt
-		status=$(awk '/state:/ {print $NF}' status.txt | sed 's/.$//');
-		staked=$(awk '/lockedStake:/ {print $NF}' status.txt);
-		earn=$(awk '/currentRewards:/ {print $NF}' status.txt);
+		docker exec -t shardeum-dashboard operator-cli status > /root/status.txt
+		status=$(awk '/state:/ {print $NF}' /root/status.txt | sed 's/.$//');
+		staked=$(awk '/lockedStake:/ {print $NF}' /root/status.txt);
+		earn=$(awk '/currentRewards:/ {print $NF}' /root/status.txt);
 	fi
 	
 	if [[ $status == *"aiting-for-networ"* || $status == *"tandb"* ]]; then 

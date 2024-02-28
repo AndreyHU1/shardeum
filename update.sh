@@ -1,5 +1,5 @@
 #!/root/bin/bash
-channel_id=$(awk '/shardeum_channel_id:/ {print $NF}' config);
+channel_id=$(awk '/shardeum_update_channel_id:/ {print $NF}' config);
 tg_bot_token=$(awk '/tg_bot_token:/ {print $NF}' config);
 node_name=$(awk '/node_name:/ {print $NF}' config);
 docker exec -t shardeum-dashboard operator-cli status > status.txt

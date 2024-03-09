@@ -8,7 +8,7 @@ sudo curl -O https://raw.githubusercontent.com/AndreyHU1/shardeum/main/status.sh
 
 #if [[ 1 == 1 ]]; then
 #if [[ $version != *".9.7"* && $version == *".9."* ]]; then
-if [[ $version != *".10.1"* ]]; then
+if [[ $version != *".10.2"* ]]; then
 	sudo curl -O https://gitlab.com/shardeum/validator/dashboard/-/raw/main/installer.sh
  	sudo curl -O https://raw.githubusercontent.com/AndreyHU1/shardeum/main/update.exp && chmod +x update.exp
 	sudo expect update.exp
